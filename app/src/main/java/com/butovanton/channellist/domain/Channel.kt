@@ -1,4 +1,8 @@
 package com.butovanton.channellist.domain
 
-class Channel {
+data class Channel(
+    val name: String,
+    val url: String,
+    val icon: String?
+) {
 }
