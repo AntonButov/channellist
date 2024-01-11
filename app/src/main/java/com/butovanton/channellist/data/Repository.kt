@@ -18,6 +18,6 @@ class Repository(private val service: IService) : IRepository {
 
 class ChannelResponse(
     val name: String,
-    val url: String,
+    val url: String?,
     val icon: String?
 )
