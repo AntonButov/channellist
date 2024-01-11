@@ -1,4 +1,4 @@
-package com.butovanton.chanellist.presentation.theme
+package com.butovanton.channellist.presentation.theme
 
 import android.app.Activity
 import android.os.Build

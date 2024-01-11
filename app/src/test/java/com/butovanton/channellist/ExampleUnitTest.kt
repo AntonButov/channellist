@@ -1,4 +1,4 @@
-package com.butovanton.chanellist
+package com.butovanton.channellist
 
 import org.junit.Test
 

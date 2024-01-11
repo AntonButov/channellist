@@ -1,4 +1,4 @@
-package com.butovanton.chanellist
+package com.butovanton.channellist
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,4 +1,4 @@
-package com.butovanton.chanellist.presentation.theme
+package com.butovanton.channellist.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
