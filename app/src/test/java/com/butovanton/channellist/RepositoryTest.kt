@@ -6,6 +6,7 @@ import com.butovanton.channellist.data.Repository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
@@ -20,7 +21,7 @@ class RepositoryTest {
             service.getChannels()
         } returns listOf(ChannelResponse(name = "name", url = "url", icon = "icon"))
         val repositoryTest = Repository(service)
-        val result = repositoryTest.getChannels()?.first()
+        val result = repositoryTest.getChannels().first()?.first()
         assertNotNull(result)
         assertEquals("name", result!!.name)
         assertEquals("url", result.url)

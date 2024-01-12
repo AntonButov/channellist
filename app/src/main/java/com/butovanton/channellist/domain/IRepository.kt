@@ -1,5 +1,7 @@
 package com.butovanton.channellist.domain
 
+import kotlinx.coroutines.flow.Flow
+
 interface IRepository {
-    suspend fun getChannels(): List<Channel>?
+    fun getChannels(): Flow<List<Channel>?>
 }
