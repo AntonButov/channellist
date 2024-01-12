@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import com.butovanton.channellist.domain.Channel
 import com.butovanton.channellist.domain.IRepository
 import com.butovanton.channellist.presentation.components.TabScreen
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -30,16 +32,18 @@ class TabsViewModel(
     private val _tab: MutableStateFlow<TabScreen> = MutableStateFlow(TabScreen.All)
     val tab: StateFlow<TabScreen> = _tab.asStateFlow()
 
-    init {
-
-    }
-
+    @OptIn(FlowPreview::class)
     val channels: Flow<List<ChannelUi>?> = repository.getChannels().mapNotNull {
         it?.map {
             ChannelUi(it.name, it.url, it.icon, false)
         }
+    }.zip(searchQuery.debounce(1000)) { channels, query ->
+        if (query.isEmpty()) {
+            channels
+        } else {
+            channels.filter { it.name.contains(query, ignoreCase = true) }
+        }
     }
-
 
     fun onSearchQueryChanged(query: String) {
         savedStateHandle[SEARCH_QUERY] = query
