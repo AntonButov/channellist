@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Divider
-import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,14 +21,15 @@ enum class TabScreen(@StringRes val nameId: Int) {
 
 @Composable
 fun TabScreen(
+    placeHolderText: String,
     searchQuery: String,
     onSearchQueryChanged: (String) -> Unit,
+    tabTitles: List<String>,
     selectedTabScreen: TabScreen,
     onTabSelect: (TabScreen) -> Unit,
     channels: List<ChannelUi>,
     onFavoriteClick: (String) -> Unit,
     onClick: (String?) -> Unit,
-    placeHolderText: String = "Канал"
 ) {
     Column {
         Search(
@@ -42,7 +42,7 @@ fun TabScreen(
         )
         Spacer(modifier = Modifier.size(12.dp))
         Tabs(
-            titles = TabScreen.entries.map { "1" },
+            titles = tabTitles,
             tabSelected = selectedTabScreen,
             onTabSelect = onTabSelect
         )
@@ -62,8 +62,10 @@ fun TabScreen(
 fun TabScreenPreview() {
     ChannelListTheme {
         TabScreen(
-            searchQuery = "Канал",
+            placeHolderText = "Search",
+            searchQuery = "",
             onSearchQueryChanged = {},
+            tabTitles = listOf("All", "Favorite"),
             selectedTabScreen = TabScreen.All,
             onTabSelect = {},
             channels = listOf(
@@ -71,7 +73,7 @@ fun TabScreenPreview() {
                 ChannelUi("name", null, null, false)
             ),
             onFavoriteClick = {},
-            onClick = {}
+            onClick = {},
         )
     }
 }
