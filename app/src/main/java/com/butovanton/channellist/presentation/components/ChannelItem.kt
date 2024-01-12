@@ -50,7 +50,7 @@ fun ChannelItem(
 @Preview()
 @Composable
 fun ChannelItemPreview() {
-MaterialTheme{
+MaterialTheme {
         ChannelItem(
             name = "name",
             isFavorite = true,
