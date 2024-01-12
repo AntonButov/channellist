@@ -25,7 +25,6 @@ fun ChannelList(
                     onClick(channels[index].url)
                 }
             )
-
         }
     }
 }
