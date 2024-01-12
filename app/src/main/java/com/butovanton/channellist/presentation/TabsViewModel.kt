@@ -43,6 +43,12 @@ class TabsViewModel(
         } else {
             channels.filter { it.name.contains(query, ignoreCase = true) }
         }
+    }.zip(tab) {
+        channels, tab ->
+        when (tab) {
+            TabScreen.All -> channels
+            TabScreen.Favorite -> channels.filter { it.isFavorite }
+        }
     }
 
     fun onSearchQueryChanged(query: String) {

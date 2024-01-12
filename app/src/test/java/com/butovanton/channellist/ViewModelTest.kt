@@ -38,7 +38,7 @@ class ViewModelTest {
     }
 
     @Test
-    fun `on search 'na' should return the chanel`() = runBlocking {
+    fun `on search 'st' should return the chanel`() = runBlocking {
         val repository = mockk<IRepository>()
         coEvery { repository.getChannels() }
         coEvery { repository.getChannels() } returns flowOf(
@@ -56,6 +56,22 @@ class ViewModelTest {
         viewModel.onSearchQueryChanged("")
         val result2 = viewModel.channels.first()
         assertEquals(result2?.count(), 2)
+    }
+
+    @Test
+    fun `on tab select should change tab`() = runBlocking {
+        val repository = mockk<IRepository>()
+        coEvery { repository.getChannels() } returns flowOf(
+            listOf(Channel("first", null, null)),
+            listOf(Channel("second", null, null)
+            )
+        )
+        val viewModel = TabsViewModel(repository, savedStateHandle = SavedStateHandle())
+        viewModel.onTabSelect(TabScreen.Favorite)
+        assertEquals(viewModel.tab.value, TabScreen.Favorite)
+        val result = viewModel.channels.first()
+        assertEquals(result?.first()?.name, "second")
+        assertEquals(result?.count(), 1)
     }
 
 
