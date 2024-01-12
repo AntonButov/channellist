@@ -2,6 +2,8 @@ package com.butovanton.channellist.presentation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.butovanton.channellist.data.IFavoriteRepository
+import com.butovanton.channellist.data.Repository
 import com.butovanton.channellist.domain.Channel
 import com.butovanton.channellist.domain.IRepository
 import com.butovanton.channellist.presentation.components.TabScreen
@@ -11,19 +13,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.zip
 
 private const val SEARCH_QUERY = "searchQuery"
 
 class TabsViewModel(
     repository: IRepository,
+    private val favoriteRepository: IFavoriteRepository,
     private val savedStateHandle: SavedStateHandle,
 ): ViewModel() {
 
@@ -35,7 +32,7 @@ class TabsViewModel(
     @OptIn(FlowPreview::class)
     val channels: Flow<List<ChannelUi>?> = repository.getChannels().mapNotNull {
         it?.map {
-            ChannelUi(it.name, it.url, it.icon, false)
+            ChannelUi(it.name, it.url, it.icon, favoriteRepository.isFavorite(it.name))
         }
     }.zip(searchQuery.debounce(1000)) { channels, query ->
         if (query.isEmpty()) {
