@@ -11,8 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import com.butovanton.chanellist.R
 import com.butovanton.channellist.presentation.ChannelUi
+import com.butovanton.channellist.presentation.TabsViewModel
 import com.butovanton.channellist.presentation.theme.ChannelListTheme
 
 enum class TabScreen(@StringRes val nameId: Int) {
@@ -21,6 +23,23 @@ enum class TabScreen(@StringRes val nameId: Int) {
 
 @Composable
 fun TabScreen(
+    viewModel: TabsViewModel,
+) {
+  //  TabScreen(
+ ///       placeHolderText = placeHolderText,
+  //      searchQuery = searchQuery,
+  //      onSearchQueryChanged = onSearchQueryChanged,
+  //      tabTitles = tabTitles,
+  //      selectedTabScreen = selectedTabScreen,
+  //      onTabSelect = onTabSelect,
+  //      channels = channels,
+  //      onFavoriteClick = onFavoriteClick,
+  //      onClick = onClick
+  //  )
+}
+
+@Composable
+private fun TabScreen(
     placeHolderText: String,
     searchQuery: String,
     onSearchQueryChanged: (String) -> Unit,
@@ -59,7 +78,7 @@ fun TabScreen(
 
 @Preview
 @Composable
-fun TabScreenPreview() {
+private fun TabScreenPreview() {
     ChannelListTheme {
         TabScreen(
             placeHolderText = "Search",

@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.coil)
+    implementation(libs.koin)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     androidTestImplementation(libs.androidx.junit)
