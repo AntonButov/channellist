@@ -22,15 +22,14 @@ import coil.compose.rememberAsyncImagePainter
 fun ChannelItem(
     modifier: Modifier = Modifier,
     name: String,
-    url: String?,
     icon: String?,
     isFavorite: Boolean,
     onFavoriteClick: () -> Unit,
-    onClick: (String) -> Unit
+    onClick: () -> Unit
 ) {
     val imageloader = rememberAsyncImagePainter(model = icon)
     ListItem(
-        modifier = modifier.fillMaxWidth().clickable { url?.let { onClick(url) } },
+        modifier = modifier.fillMaxWidth().clickable(onClick = onClick),
         leadingContent = {
                 Image(
                     modifier = icon?.let { Modifier } ?: Modifier.size(60.dp),
@@ -56,7 +55,6 @@ MaterialTheme{
             name = "name",
             isFavorite = true,
             onFavoriteClick = {},
-            url = null,
             icon = null,
             onClick = {}
         )
