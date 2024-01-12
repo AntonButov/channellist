@@ -17,7 +17,7 @@ fun Tabs(
     modifier: Modifier = Modifier,
     titles: List<String>,
     tabSelected: TabScreen,
-    onTabSelected: (TabScreen) -> Unit
+    onTabSelect: (TabScreen) -> Unit
 ) {
     TabRow(
         selectedTabIndex = tabSelected.ordinal,
@@ -27,7 +27,7 @@ fun Tabs(
 
             Tab(
                 selected = index == tabSelected.ordinal,
-                onClick = { onTabSelected(TabScreen.entries[index]) },
+                onClick = { onTabSelect(TabScreen.entries[index]) },
             ) {
                 Text(
                     modifier = Modifier.wrapContentSize(Alignment.Center).padding(bottom = 16.dp),
@@ -45,7 +45,7 @@ fun TabsPreview() {
         Tabs(
             titles = listOf("All", "Favorite"),
             tabSelected = TabScreen.Favorite,
-            onTabSelected = {}
+            onTabSelect = {}
         )
     }
 }
