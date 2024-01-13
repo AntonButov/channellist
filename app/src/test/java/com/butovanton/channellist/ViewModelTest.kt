@@ -43,7 +43,7 @@ class ViewModelTest {
         val repository = mockk<IRepository>()
         coEvery { repository.getChannels() } returns flowOf(listOf(Channel("name", null, null)))
         val favoriteRepository = mockk<IFavoriteRepository>()
-        coEvery { favoriteRepository.getFavorites() } returns flowOf(listOf("name"))
+        coEvery { favoriteRepository.favorites } returns flowOf(listOf("name"))
         val viewModel = TabsViewModel(
             repository,
             favoriteRepository,
@@ -64,7 +64,7 @@ class ViewModelTest {
             )
         )
         val favoriteRepository = mockk<IFavoriteRepository>()
-        coEvery { favoriteRepository.getFavorites() } returns flowOf(listOf("smart", "star"))
+        coEvery { favoriteRepository.favorites } returns flowOf(listOf("smart", "star"))
         val viewModel = TabsViewModel(
             repository,
             favoriteRepository,
@@ -93,7 +93,7 @@ class ViewModelTest {
             )
         )
         val favoriteRepository = mockk<IFavoriteRepository>()
-        every { favoriteRepository.getFavorites() } returns flowOf(
+        every { favoriteRepository.favorites } returns flowOf(
             listOf("favorite")
         )
         val viewModel = TabsViewModel(

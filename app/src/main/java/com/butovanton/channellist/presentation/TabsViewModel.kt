@@ -31,7 +31,7 @@ class TabsViewModel(
         repository
             .getChannels()
             .mapNotNull { it }
-            .combine(favoriteRepository.getFavorites()) { channels, favorites ->
+            .combine(favoriteRepository.favorites) { channels, favorites ->
                 channels.map {
                     ChannelUi(it.name, it.url, it.icon, favorites.contains(it.name))
                 }

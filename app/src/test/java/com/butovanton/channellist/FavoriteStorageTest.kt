@@ -25,5 +25,18 @@ class FavoriteStorageTest {
         favoriteStorage.saveFavorites(favorites)
         val savedFavorites = favoriteStorage.getFavorites()
         assertEquals(savedFavorites, favorites)
+        sharedPreferences.edit().clear().apply()
+    }
+
+    @Test
+    fun `save some favorite`() {
+        val context = ApplicationProvider.getApplicationContext<Application>()
+        val sharedPreferences = context.getSharedPreferences("testSecond", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val favoriteStorage = FavoriteStorage(sharedPreferences, gson)
+        val favorites = listOf("some", "some")
+        favoriteStorage.saveFavorites(favorites)
+        val savedFavorites = favoriteStorage.getFavorites()
+        assertEquals(savedFavorites.count(), 2)
     }
 }
