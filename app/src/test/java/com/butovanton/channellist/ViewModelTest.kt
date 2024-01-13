@@ -24,7 +24,8 @@ class ViewModelTest {
         val viewModel = TabsViewModel(
             mockk<IRepository>(relaxed = true),
             mockk<IFavoriteRepository>(relaxed = true),
-            savedStateHandle = SavedStateHandle())
+            SavedStateHandle()
+        )
         assertEquals(viewModel.searchQuery.value, "")
     }
 
@@ -41,7 +42,9 @@ class ViewModelTest {
     @Test
     fun `on init should return some list`() = runBlocking {
         val repository = mockk<IRepository>()
-        coEvery { repository.getChannels() } returns flowOf(listOf(Channel("name", null, null)))
+        coEvery { repository.getChannels() } returns flowOf(
+            listOf(Channel("name", null, null))
+        )
         val favoriteRepository = mockk<IFavoriteRepository>()
         coEvery { favoriteRepository.favorites } returns flowOf(listOf("name"))
         val viewModel = TabsViewModel(
@@ -68,17 +71,19 @@ class ViewModelTest {
         val viewModel = TabsViewModel(
             repository,
             favoriteRepository,
-            savedStateHandle = SavedStateHandle()
+            SavedStateHandle()
         )
         viewModel.channels.test {
+            val resulFirst = awaitItem()
+            assertEquals(resulFirst.count(), 2)
             viewModel.onSearchQueryChanged("st")
             assertEquals(viewModel.searchQuery.value, "st")
-            val result = awaitItem()
-            assertEquals(result.first().name, "star")
-            assertEquals(result.count(), 1)
+            val resultFiltered = awaitItem()
+            assertEquals(resultFiltered.first().name, "star")
+            assertEquals(resultFiltered.count(), 1)
             viewModel.onSearchQueryChanged("")
-            val resultSecond = awaitItem()
-            assertEquals(resultSecond.count(),2)
+            val resultWithOutFilter = awaitItem()
+            assertEquals(resultWithOutFilter.count(), 2)
             verify(exactly = 1) { repository.getChannels() }
         }
     }
@@ -102,15 +107,17 @@ class ViewModelTest {
             savedStateHandle = SavedStateHandle()
         )
         viewModel.channels.test {
+            val resultAll = awaitItem()
+            assertEquals(resultAll.count(), 2)
             viewModel.onTabSelect(TabScreen.Favorite)
             assertEquals(viewModel.tab.value, TabScreen.Favorite)
-            val result = awaitItem()
-            assertEquals(result.first().name, "favorite")
-            assertEquals(result.count(), 1)
+            val resultFavorite = awaitItem()
+            assertEquals(resultFavorite.first().name, "favorite")
+            assertEquals(resultFavorite.count(), 1)
             viewModel.onTabSelect(TabScreen.All)
             assertEquals(viewModel.tab.value, TabScreen.All)
-            val resultSecond = awaitItem()
-            assertEquals(resultSecond.count(), 2)
+            val resultAllSecond = awaitItem()
+            assertEquals(resultAllSecond.count(), 2)
             verify(exactly = 1) { repository.getChannels() }
         }
     }
