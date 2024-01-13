@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import com.butovanton.chanellist.R
+import com.butovanton.channellist.presentation.theme.ChannelListTheme
 
 @Composable
 fun ChannelItem(
@@ -62,7 +63,29 @@ fun ChannelItemPreview() {
 @Composable
 fun FavoriteIcon(isChecked: Boolean, onClick: () -> Unit) { // todo
     FilledIconButton(onClick = onClick) {
-        Icon(imageVector = Icons.Default.Star, contentDescription = null)
+        Icon(
+            imageVector = Icons.Default.Star,
+            contentDescription = null,
+            tint = if (isChecked) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.primary
+        )
     }
 }
+
+@Preview
+@Composable
+fun FavoriteIconPreviewChecked() {
+    ChannelListTheme {
+        FavoriteIcon(isChecked = true, onClick = {})
+    }
+}
+
+
+@Preview
+@Composable
+fun FavoriteIconPreview() {
+    ChannelListTheme {
+        FavoriteIcon(isChecked = false, onClick = {})
+    }
+}
+
 
