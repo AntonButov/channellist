@@ -20,7 +20,7 @@ class TabsViewModel(
     repository: IRepository,
     private val favoriteRepository: IFavoriteRepository,
     private val savedStateHandle: SavedStateHandle,
-): ViewModel() {
+) : ViewModel() {
 
     val searchQuery = savedStateHandle.getStateFlow(key = SEARCH_QUERY, initialValue = "")
 
@@ -28,23 +28,26 @@ class TabsViewModel(
     val tab: StateFlow<TabScreen> = _tab.asStateFlow()
 
     @OptIn(FlowPreview::class)
-    val channels: Flow<List<ChannelUi>> = repository.getChannels().mapNotNull {
-        it?.map {
-            ChannelUi(it.name, it.url, it.icon, favoriteRepository.isFavorite(it.name))
-        }
-    }.combine(searchQuery.debounce(1000)) { channels, query ->
-        if (query.isEmpty()) {
-            channels
-        } else {
-            channels.filter { it.name.contains(query, ignoreCase = true) }
-        }
-    }.combine(tab) {
-        channels, tab ->
-        when (tab) {
-            TabScreen.All -> channels
-            TabScreen.Favorite -> channels.filter { it.isFavorite }
-        }
-    }
+    val channels: Flow<List<ChannelUi>> =
+        repository
+            .getChannels()
+            .mapNotNull { it }
+            .combine(favoriteRepository.getFavorites()) { channels, favorites ->
+                channels.map {
+                    ChannelUi(it.name, it.url, it.icon, favorites.contains(it.name))
+                }
+            }.combine(searchQuery.debounce(1000)) { channels, query ->
+                if (query.isEmpty()) {
+                    channels
+                } else {
+                    channels.filter { it.name.contains(query, ignoreCase = true) }
+                }
+            }.combine(tab) { channels, tab ->
+                when (tab) {
+                    TabScreen.All -> channels
+                    TabScreen.Favorite -> channels.filter { it.isFavorite }
+                }
+            }
 
     fun onSearchQueryChanged(query: String) {
         savedStateHandle[SEARCH_QUERY] = query
@@ -55,7 +58,7 @@ class TabsViewModel(
     }
 
     fun onFavoriteClick(name: String) {
-        when(tab.value) {
+        when (tab.value) {
             TabScreen.All -> favoriteRepository.add(name)
             TabScreen.Favorite -> favoriteRepository.remove(name)
         }

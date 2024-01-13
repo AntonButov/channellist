@@ -42,9 +42,11 @@ class ViewModelTest {
     fun `on init should return some list`() = runBlocking {
         val repository = mockk<IRepository>()
         coEvery { repository.getChannels() } returns flowOf(listOf(Channel("name", null, null)))
+        val favoriteRepository = mockk<IFavoriteRepository>()
+        coEvery { favoriteRepository.getFavorites() } returns flowOf(listOf("name"))
         val viewModel = TabsViewModel(
             repository,
-            mockk<IFavoriteRepository>(relaxed = true),
+            favoriteRepository,
             savedStateHandle = SavedStateHandle()
         )
         val result = viewModel.channels.first()
@@ -61,9 +63,11 @@ class ViewModelTest {
                 Channel("star", null, null)
             )
         )
+        val favoriteRepository = mockk<IFavoriteRepository>()
+        coEvery { favoriteRepository.getFavorites() } returns flowOf(listOf("smart", "star"))
         val viewModel = TabsViewModel(
             repository,
-            mockk<IFavoriteRepository>(relaxed = true),
+            favoriteRepository,
             savedStateHandle = SavedStateHandle()
         )
         viewModel.channels.test {
@@ -89,8 +93,9 @@ class ViewModelTest {
             )
         )
         val favoriteRepository = mockk<IFavoriteRepository>()
-        every { favoriteRepository.isFavorite("first") } returns false
-        every { favoriteRepository.isFavorite("favorite") } returns true
+        every { favoriteRepository.getFavorites() } returns flowOf(
+            listOf("favorite")
+        )
         val viewModel = TabsViewModel(
             repository,
             favoriteRepository,

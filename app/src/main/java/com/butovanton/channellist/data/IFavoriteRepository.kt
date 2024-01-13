@@ -1,8 +1,10 @@
 package com.butovanton.channellist.data
 
+import kotlinx.coroutines.flow.Flow
+
 interface IFavoriteRepository {
 
-    fun isFavorite(name: String): Boolean
+    fun getFavorites(): Flow<List<String>>
 
     fun add(name: String)
 
