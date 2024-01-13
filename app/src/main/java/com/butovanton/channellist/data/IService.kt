@@ -5,7 +5,6 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 
 interface IService {
-   // @Header("X-Key: fh3487klskhjk2fh782kjhsdi72knjwfk7i2efdjbm")
     @GET("v1/playlist")
     suspend fun getChannels(): ChannelWrapper
 }
