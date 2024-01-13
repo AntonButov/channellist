@@ -12,7 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.zip
 
@@ -30,17 +32,17 @@ class TabsViewModel(
     val tab: StateFlow<TabScreen> = _tab.asStateFlow()
 
     @OptIn(FlowPreview::class)
-    val channels: Flow<List<ChannelUi>?> = repository.getChannels().mapNotNull {
+    val channels: Flow<List<ChannelUi>> = repository.getChannels().mapNotNull {
         it?.map {
             ChannelUi(it.name, it.url, it.icon, favoriteRepository.isFavorite(it.name))
         }
-    }.zip(searchQuery.debounce(1000)) { channels, query ->
+    }.combine(searchQuery.debounce(1000)) { channels, query ->
         if (query.isEmpty()) {
             channels
         } else {
             channels.filter { it.name.contains(query, ignoreCase = true) }
         }
-    }.zip(tab) {
+    }.combine(tab) {
         channels, tab ->
         when (tab) {
             TabScreen.All -> channels

@@ -1,6 +1,7 @@
 package com.butovanton.channellist
 
 import androidx.lifecycle.SavedStateHandle
+import app.cash.turbine.test
 import com.butovanton.channellist.data.IFavoriteRepository
 import com.butovanton.channellist.domain.Channel
 import com.butovanton.channellist.domain.IRepository
@@ -47,8 +48,8 @@ class ViewModelTest {
             savedStateHandle = SavedStateHandle()
         )
         val result = viewModel.channels.first()
-        assertEquals(result?.first()?.name, "name")
-        assertEquals(result?.count(), 1)
+        assertEquals(result.first().name, "name")
+        assertEquals(result.count(), 1)
     }
 
     @Test
@@ -66,14 +67,16 @@ class ViewModelTest {
             savedStateHandle = SavedStateHandle()
         )
         viewModel.onSearchQueryChanged("st")
-        val result = viewModel.channels.first()
-        assertEquals(result?.first()?.name, "star")
-        assertEquals(result?.count(), 1)
-
-        viewModel.onSearchQueryChanged("")
-        val result2 = viewModel.channels.first()
-        assertEquals(result2?.count(), 2)
-        verify(exactly = 1) { repository.getChannels() }
+        assertEquals(viewModel.searchQuery.value, "st")
+        viewModel.channels.test {
+            val result = awaitItem()
+            assertEquals(result.first().name, "star")
+            assertEquals(result.count(), 1)
+            viewModel.onSearchQueryChanged("")
+            val resultSecond = awaitItem()
+            assertEquals(resultSecond.count(),2)
+            verify(exactly = 1) { repository.getChannels() }
+        }
     }
 
     @Test
