@@ -66,9 +66,9 @@ class ViewModelTest {
             mockk<IFavoriteRepository>(relaxed = true),
             savedStateHandle = SavedStateHandle()
         )
-        viewModel.onSearchQueryChanged("st")
-        assertEquals(viewModel.searchQuery.value, "st")
         viewModel.channels.test {
+            viewModel.onSearchQueryChanged("st")
+            assertEquals(viewModel.searchQuery.value, "st")
             val result = awaitItem()
             assertEquals(result.first().name, "star")
             assertEquals(result.count(), 1)
@@ -80,33 +80,33 @@ class ViewModelTest {
     }
 
     @Test
-    fun `on tab select should change tab`() = runBlocking {
+    fun `on tab select should change channels`() = runBlocking {
         val repository = mockk<IRepository>()
         coEvery { repository.getChannels() } returns flowOf(
             listOf(
                 Channel("first", null, null),
-                Channel("second", null, null)
+                Channel("favorite", null, null)
             )
         )
         val favoriteRepository = mockk<IFavoriteRepository>()
         every { favoriteRepository.isFavorite("first") } returns false
-        every { favoriteRepository.isFavorite("second") } returns true
+        every { favoriteRepository.isFavorite("favorite") } returns true
         val viewModel = TabsViewModel(
             repository,
             favoriteRepository,
             savedStateHandle = SavedStateHandle()
         )
-        viewModel.onTabSelect(TabScreen.Favorite)
-        assertEquals(viewModel.tab.value, TabScreen.Favorite)
-        val result = viewModel.channels.first()
-        assertEquals(result?.first()?.name, "second")
-        assertEquals(result?.count(), 1)
-        verify(exactly = 1) { repository.getChannels() }
-
-        viewModel.onTabSelect(TabScreen.All)
-        assertEquals(viewModel.tab.value, TabScreen.All)
-        val result2 = viewModel.channels.first()
-        assertEquals(result2?.count(), 2)
-        verify(exactly = 1) { repository.getChannels() }
+        viewModel.channels.test {
+            viewModel.onTabSelect(TabScreen.Favorite)
+            assertEquals(viewModel.tab.value, TabScreen.Favorite)
+            val result = awaitItem()
+            assertEquals(result.first().name, "favorite")
+            assertEquals(result.count(), 1)
+            viewModel.onTabSelect(TabScreen.All)
+            assertEquals(viewModel.tab.value, TabScreen.All)
+            val resultSecond = awaitItem()
+            assertEquals(resultSecond.count(), 2)
+            verify(exactly = 1) { repository.getChannels() }
+        }
     }
 }
