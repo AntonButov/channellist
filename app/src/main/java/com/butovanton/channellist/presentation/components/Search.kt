@@ -7,6 +7,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -61,7 +62,8 @@ fun Search(
         ),
         maxLines = 1,
         singleLine = true,
-        placeholder = { Text(text = placeHolderText) }
+        placeholder = { Text(text = placeHolderText) },
+        shape = MaterialTheme.shapes.large
     )
 }
 
