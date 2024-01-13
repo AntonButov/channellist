@@ -38,5 +38,6 @@ class FavoriteStorageTest {
         favoriteStorage.saveFavorites(favorites)
         val savedFavorites = favoriteStorage.getFavorites()
         assertEquals(savedFavorites.count(), 2)
+        sharedPreferences.edit().clear().apply()
     }
 }
