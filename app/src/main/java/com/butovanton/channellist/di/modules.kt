@@ -19,13 +19,11 @@ private const val baseUrl = "https://limeapi.online/api/"
 private const val apiKey = "fh3487klskhjk2fh782kjhsdi72knjwfk7i2efdjbm"
 
 val repositoryModule = module {
-    val client = OkHttpClient().newBuilder().addInterceptor(object : Interceptor {
-            override fun intercept(chain: Interceptor.Chain): Response {
-                val requestBuilder = chain.request().newBuilder()
-                requestBuilder.header("X-Key", apiKey)
-                return chain.proceed(requestBuilder.build())
-            }
-        }).build()
+    val client = OkHttpClient().newBuilder().addInterceptor(Interceptor { chain ->
+        val requestBuilder = chain.request().newBuilder()
+        requestBuilder.header("X-Key", apiKey)
+        chain.proceed(requestBuilder.build())
+    }).build()
     val retrofit = Retrofit.Builder()
         .client(client)
         .baseUrl(baseUrl)
