@@ -1,12 +1,15 @@
 package com.butovanton.channellist.presentation.components
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -61,18 +64,29 @@ private fun TabScreen(
         Search(
             modifier = Modifier
                 .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface)
                 .padding(vertical = 8.dp, horizontal = 24.dp),
             searchQuery = searchQuery,
             onSearchQueryChanged = onSearchQueryChanged,
             placeHolderText = placeHolderText
         )
-        Spacer(modifier = Modifier.size(12.dp))
+        Spacer(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface)
+                .fillMaxWidth()
+                .height(12.dp)
+        )
         Tabs(
             titles = tabTitles,
             tabSelected = selectedTabScreen,
             onTabSelect = onTabSelect
         )
-        Spacer(modifier = Modifier.size(6.dp))
+        Spacer(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface)
+                .fillMaxWidth()
+                .height(6.dp)
+        )
         Divider(thickness = 2.dp)
         ChannelList(
             channels = channels,
