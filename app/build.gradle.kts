@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.koin)
     implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)

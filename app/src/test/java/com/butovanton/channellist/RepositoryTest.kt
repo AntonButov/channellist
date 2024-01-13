@@ -1,6 +1,8 @@
 package com.butovanton.channellist
 
+import app.cash.turbine.test
 import com.butovanton.channellist.data.ChannelResponse
+import com.butovanton.channellist.data.ChannelWrapper
 import com.butovanton.channellist.data.IService
 import com.butovanton.channellist.data.Repository
 import io.mockk.coEvery
@@ -19,7 +21,7 @@ class RepositoryTest {
         val service = mockk<IService>()
         coEvery {
             service.getChannels()
-        } returns listOf(ChannelResponse(name = "name", url = "url", icon = "icon"))
+        } returns ChannelWrapper(channels = listOf(ChannelResponse(name_ru = "name", url = "url", image = "icon")))
         val repositoryTest = Repository(service)
         val result = repositoryTest.getChannels().first()?.first()
         assertNotNull(result)
@@ -29,15 +31,16 @@ class RepositoryTest {
     }
 
     @Test
-    fun `on exception getChannels should return null`() = runBlocking{
+    fun `on exception getChannels should return null`() = runBlocking {
         val service = mockk<IService>()
         coEvery {
             service.getChannels()
         } throws Throwable()
-        val repositoryTest = Repository(service)
-        val result = repositoryTest.getChannels()
-        assertNull(result)
+        val repository = Repository(service)
+        repository.getChannels().test {
+            assertNull(awaitItem())
+            awaitComplete()
+        }
     }
-
 
 }

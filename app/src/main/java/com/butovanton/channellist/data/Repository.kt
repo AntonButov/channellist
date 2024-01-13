@@ -9,20 +9,26 @@ class Repository(private val service: IService) : IRepository {
     override fun getChannels(): Flow<List<Channel>?> = flow {
         emit(
             runCatching {
-                service.getChannels().map {
+                service.getChannels().channels?.map {
                     Channel(
-                        it.name,
+                        it.name_ru,
                         it.url,
-                        it.icon
+                        it.image
                     )
                 }
+            }.onFailure {
+                it.printStackTrace()
             }.getOrNull()
         )
     }
 }
 
-class ChannelResponse(
-    val name: String,
+data class ChannelWrapper(
+    val channels: List<ChannelResponse>?
+)
+
+data class ChannelResponse(
+    val name_ru: String,
     val url: String?,
-    val icon: String?
+    val image: String?
 )

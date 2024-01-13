@@ -34,6 +34,7 @@ coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 koin = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
