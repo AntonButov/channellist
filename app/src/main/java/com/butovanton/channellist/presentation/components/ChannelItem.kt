@@ -49,7 +49,7 @@ fun ChannelItem(
 @Preview()
 @Composable
 fun ChannelItemPreview() {
-    MaterialTheme {
+    ChannelListTheme {
         ChannelItem(
             name = "name",
             isFavorite = true,
@@ -66,26 +66,9 @@ fun FavoriteIcon(isChecked: Boolean, onClick: () -> Unit) { // todo
         Icon(
             imageVector = Icons.Default.Star,
             contentDescription = null,
-            tint = if (isChecked) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.primary
+            tint = if (isChecked) MaterialTheme.colorScheme.onSurface
+            else MaterialTheme.colorScheme.primary
         )
     }
 }
-
-@Preview
-@Composable
-fun FavoriteIconPreviewChecked() {
-    ChannelListTheme {
-        FavoriteIcon(isChecked = true, onClick = {})
-    }
-}
-
-
-@Preview
-@Composable
-fun FavoriteIconPreview() {
-    ChannelListTheme {
-        FavoriteIcon(isChecked = false, onClick = {})
-    }
-}
-
 

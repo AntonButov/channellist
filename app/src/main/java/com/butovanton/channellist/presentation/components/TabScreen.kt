@@ -74,7 +74,6 @@ private fun TabScreen(
         )
         Spacer(modifier = Modifier.size(6.dp))
         Divider(thickness = 2.dp)
-        Spacer(modifier = Modifier.size(20.dp))
         ChannelList(
             channels = channels,
             onFavoriteClick = onFavoriteClick,

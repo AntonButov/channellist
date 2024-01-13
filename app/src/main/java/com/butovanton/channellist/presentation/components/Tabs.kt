@@ -2,6 +2,7 @@ package com.butovanton.channellist.presentation.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -24,14 +25,18 @@ fun Tabs(
         modifier = modifier,
     ) {
         titles.forEachIndexed { index, text ->
-
+            val isSelected = index == tabSelected.ordinal
             Tab(
-                selected = index == tabSelected.ordinal,
+                selected = isSelected,
                 onClick = { onTabSelect(TabScreen.entries[index]) },
             ) {
                 Text(
-                    modifier = Modifier.wrapContentSize(Alignment.Center).padding(bottom = 16.dp),
+                    modifier = Modifier
+                        .wrapContentSize(Alignment.Center)
+                        .padding(bottom = 16.dp),
                     text = text,
+                    color = if (isSelected) MaterialTheme.colorScheme.onSurface
+                    else MaterialTheme.colorScheme.tertiary
                 )
             }
         }
