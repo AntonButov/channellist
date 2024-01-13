@@ -8,14 +8,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import com.butovanton.chanellist.R
 import com.butovanton.channellist.presentation.ChannelUi
 import com.butovanton.channellist.presentation.TabsViewModel
 import com.butovanton.channellist.presentation.theme.ChannelListTheme
+import org.koin.androidx.compose.koinViewModel
 
 enum class TabScreen(@StringRes val nameId: Int) {
     All(nameId = R.string.all), Favorite(R.string.favorite)
@@ -23,19 +26,23 @@ enum class TabScreen(@StringRes val nameId: Int) {
 
 @Composable
 fun TabScreen(
-    viewModel: TabsViewModel,
+    viewModel: TabsViewModel = koinViewModel(),
 ) {
-  //  TabScreen(
- ///       placeHolderText = placeHolderText,
-  //      searchQuery = searchQuery,
-  //      onSearchQueryChanged = onSearchQueryChanged,
-  //      tabTitles = tabTitles,
-  //      selectedTabScreen = selectedTabScreen,
-  //      onTabSelect = onTabSelect,
-  //      channels = channels,
-  //      onFavoriteClick = onFavoriteClick,
-  //      onClick = onClick
-  //  )
+    val searchQuery by viewModel.searchQuery.collectAsState()
+    val channels by viewModel.channels.collectAsState(emptyList())
+    val selectedTabScreen by viewModel.tab.collectAsState()
+    val tabTitles = TabScreen.entries.map { stringResource(id = it.nameId) }
+    TabScreen(
+        placeHolderText = stringResource(id = R.string.search),
+        searchQuery = searchQuery,
+        onSearchQueryChanged = viewModel::onSearchQueryChanged,
+        tabTitles = tabTitles,
+        selectedTabScreen = selectedTabScreen,
+        onTabSelect = viewModel::onTabSelect,
+        channels = channels,
+        onFavoriteClick = viewModel::onFavoriteClick,
+        onClick = { TODO() }
+    )
 }
 
 @Composable

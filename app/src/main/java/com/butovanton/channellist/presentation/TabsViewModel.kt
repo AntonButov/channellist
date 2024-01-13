@@ -3,8 +3,6 @@ package com.butovanton.channellist.presentation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.butovanton.channellist.data.IFavoriteRepository
-import com.butovanton.channellist.data.Repository
-import com.butovanton.channellist.domain.Channel
 import com.butovanton.channellist.domain.IRepository
 import com.butovanton.channellist.presentation.components.TabScreen
 import kotlinx.coroutines.FlowPreview
@@ -14,9 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.zip
 
 private const val SEARCH_QUERY = "searchQuery"
 
@@ -58,5 +54,11 @@ class TabsViewModel(
         _tab.value = tab
     }
 
+    fun onFavoriteClick(name: String) {
+        when(tab.value) {
+            TabScreen.All -> favoriteRepository.add(name)
+            TabScreen.Favorite -> favoriteRepository.remove(name)
+        }
+    }
 
 }
