@@ -27,7 +27,6 @@ class TabsViewModel(
     private val _tab: MutableStateFlow<TabScreen> = MutableStateFlow(TabScreen.All)
     val tab: StateFlow<TabScreen> = _tab.asStateFlow()
 
-    @OptIn(FlowPreview::class)
     val channels: Flow<List<ChannelUi>> =
         repository
             .getChannels()
@@ -36,7 +35,7 @@ class TabsViewModel(
                 channels.map {
                     ChannelUi(it.name, it.url, it.icon, favorites.contains(it.name))
                 }
-            }.combine(searchQuery.debounce(1000)) { channels, query ->
+            }.combine(searchQuery) { channels, query ->
                 if (query.isEmpty()) {
                     channels
                 } else {

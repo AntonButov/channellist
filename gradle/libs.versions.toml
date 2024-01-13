@@ -13,6 +13,7 @@ coil = "2.5.0"
 koin = "3.5.3"
 turbine = "1.0.0"
 retrofit = "2.9.0"
+robolectric = "4.11.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +36,7 @@ koin = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref =
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
