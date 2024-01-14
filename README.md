@@ -8,3 +8,4 @@
 
   run tests: ./gradlew test
 
+[apk](https://github.com/AntonButov/channellist/raw/master/app.apk)
