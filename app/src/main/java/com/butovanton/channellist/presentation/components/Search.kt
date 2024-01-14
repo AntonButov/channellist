@@ -60,7 +60,7 @@ fun Search(
         ),
         maxLines = 1,
         singleLine = true,
-        placeholder = { Text(text = placeHolderText) },
+        placeholder = { Text(text = placeHolderText, style = MaterialTheme.typography.bodySmall) },
         shape = MaterialTheme.shapes.large
     )
 }

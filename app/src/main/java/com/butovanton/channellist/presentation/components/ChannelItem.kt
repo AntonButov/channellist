@@ -42,7 +42,10 @@ fun ChannelItem(
             } ?: Spacer(modifier = Modifier.size(60.dp))
         },
         headlineContent = {
-            Text(text = name)
+            Text(
+                text = name,
+                style = MaterialTheme.typography.titleMedium
+            )
         },
         trailingContent = {
             isFavorite?.let {

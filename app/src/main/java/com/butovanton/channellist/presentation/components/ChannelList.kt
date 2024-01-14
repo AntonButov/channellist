@@ -12,11 +12,12 @@ import com.butovanton.channellist.presentation.theme.ChannelListTheme
 
 @Composable
 fun ChannelList(
+    modifier: Modifier = Modifier,
     channels: List<ChannelUi>,
     onFavoriteClick: (String) -> Unit,
     onClick: (String?, String?, String) -> Unit
 ) {
-    LazyColumn {
+    LazyColumn(modifier) {
         item {
             Spacer(modifier = Modifier.size(20.dp))
         }

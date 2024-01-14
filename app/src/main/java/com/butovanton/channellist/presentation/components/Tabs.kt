@@ -2,16 +2,13 @@ package com.butovanton.channellist.presentation.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.butovanton.channellist.presentation.theme.ChannelListTheme
@@ -23,14 +20,16 @@ fun Tabs(
     tabSelected: TabScreen,
     onTabSelect: (TabScreen) -> Unit
 ) {
-    TabRow(
+    ScrollableTabRow(
         selectedTabIndex = tabSelected.ordinal,
-        modifier = modifier.wrapContentWidth(),
+        modifier = modifier,
+        edgePadding = 16.dp,
         divider = {}
     ) {
         titles.forEachIndexed { index, text ->
             val isSelected = index == tabSelected.ordinal
             Tab(
+                modifier = Modifier.padding(horizontal = 16.dp) ,
                 selected = isSelected,
                 onClick = { onTabSelect(TabScreen.entries[index]) },
             ) {
@@ -39,6 +38,7 @@ fun Tabs(
                         .wrapContentSize(Alignment.Center)
                         .padding(bottom = 16.dp),
                     text = text,
+                    style = MaterialTheme.typography.bodySmall,
                     color = if (isSelected) MaterialTheme.colorScheme.onSurface
                     else MaterialTheme.colorScheme.tertiary
                 )
