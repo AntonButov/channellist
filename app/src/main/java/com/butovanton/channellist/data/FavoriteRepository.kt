@@ -10,6 +10,7 @@ class FavoriteRepository(private val favoriteStorage: IFavoriteStorage) : IFavor
     override val favorites: Flow<List<String>> = _favorites.asStateFlow()
 
     override fun add(name: String) {
+        if (name in _favorites.value) return
         val newFavorites = _favorites.value + name
         _favorites.value = newFavorites
         favoriteStorage.saveFavorites(newFavorites)
