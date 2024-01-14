@@ -5,14 +5,21 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.butovanton.channellist.data.FavoriteStorage
 import com.google.gson.Gson
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.GlobalContext.stopKoin
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class FavoriteStorageTest {
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
 
     @Test
     fun `on getFavorites should return saved list of favorites`() {

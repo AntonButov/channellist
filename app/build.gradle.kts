@@ -72,7 +72,7 @@ dependencies {
     implementation(libs.media3.exoplayer.hls)
     implementation(libs.media3.ui)
 
-    testImplementation("androidx.test:core-ktx:1.5.0")
+    testImplementation(libs.test.core.ktx)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)

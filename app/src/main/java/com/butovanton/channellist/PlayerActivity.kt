@@ -7,14 +7,10 @@ import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.OptIn
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
@@ -45,7 +41,7 @@ class PlayerActivity : ComponentActivity() {
 
 @OptIn(UnstableApi::class) @Composable
 fun Player(url: String) {
-    val hardCodedUrl = Uri.parse("https://albportal.net/albkanalemusic.m3u8")
+    val hardCodedUrl = Uri.parse("https://albportal.net/albkanalemusic.m3u8") // todo remove when fix backend
     val context = LocalContext.current
     val lifecycleOwner = rememberUpdatedState(LocalLifecycleOwner.current)
 
