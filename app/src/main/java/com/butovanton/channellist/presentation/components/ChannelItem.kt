@@ -2,6 +2,7 @@ package com.butovanton.channellist.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -47,11 +48,14 @@ fun ChannelItem(
             .clickable(onClick = onClick)
             .clip(MaterialTheme.shapes.medium),
         leadingContent = {
-            AsyncImage(
-                model = icon,
-                placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = null
-            )
+            if (icon == null) {
+                Spacer(modifier = Modifier.size(60.dp))
+            } else {
+                AsyncImage(
+                    model = icon,
+                    contentDescription = null
+                )
+            }
         },
         headlineContent = {
             Text(text = name)
