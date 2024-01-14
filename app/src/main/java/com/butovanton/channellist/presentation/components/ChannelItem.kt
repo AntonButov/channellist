@@ -48,14 +48,12 @@ fun ChannelItem(
             .clickable(onClick = onClick)
             .clip(MaterialTheme.shapes.medium),
         leadingContent = {
-            if (icon == null) {
-                Spacer(modifier = Modifier.size(60.dp))
-            } else {
+            icon?.let {
                 AsyncImage(
                     model = icon,
                     contentDescription = null
                 )
-            }
+            } ?: Spacer(modifier = Modifier.size(60.dp))
         },
         headlineContent = {
             Text(text = name)
