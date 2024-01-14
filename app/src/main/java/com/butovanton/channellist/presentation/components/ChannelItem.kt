@@ -39,10 +39,7 @@ fun ChannelItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         icon?.let {
-            AsyncImage(
-                model = icon,
-                contentDescription = null
-            )
+            AsyncImage(model = icon, contentDescription = null)
         } ?: Spacer(modifier = Modifier.size(60.dp))
         Spacer(modifier = Modifier.size(16.dp))
         Text(
@@ -55,7 +52,7 @@ fun ChannelItem(
     }
 }
 
-@Preview()
+@Preview
 @Composable
 fun ChannelItemPreviewChecked() {
     ChannelListTheme {
@@ -69,7 +66,7 @@ fun ChannelItemPreviewChecked() {
     }
 }
 
-@Preview()
+@Preview
 @Composable
 fun ChannelItemPreview() {
     ChannelListTheme {
@@ -84,7 +81,7 @@ fun ChannelItemPreview() {
 }
 
 @Composable
-fun FavoriteIcon(isChecked: Boolean, onClick: () -> Unit) { // todo
+fun FavoriteIcon(isChecked: Boolean, onClick: () -> Unit) {
     IconButton(onClick = onClick) {
             Icon(
                 modifier = Modifier,

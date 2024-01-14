@@ -6,7 +6,6 @@ import com.butovanton.channellist.data.ChannelWrapper
 import com.butovanton.channellist.data.IService
 import com.butovanton.channellist.data.Repository
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

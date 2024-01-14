@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">chanellist</string>
+    <string name="app_name">channellist</string>
 
     <string name="all">Все</string>
     <string name="favorite">Избранные</string>

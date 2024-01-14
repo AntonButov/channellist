@@ -1,7 +1,6 @@
 package com.butovanton.channellist.di
 
 import android.content.Context
-import android.content.SharedPreferences
 import com.butovanton.channellist.data.FavoriteRepository
 import com.butovanton.channellist.data.FavoriteStorage
 import com.butovanton.channellist.data.IFavoriteRepository

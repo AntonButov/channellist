@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Chanellist"
+        android:theme="@style/Theme.Channellist"
         tools:targetApi="31">
         <activity
             android:name="com.butovanton.channellist.PlayerActivity"
@@ -22,12 +22,12 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape"
             android:label="playactivity"
-            android:theme="@style/Theme.Chanellist" />
+            android:theme="@style/Theme.Channellist" />
         <activity
             android:name="com.butovanton.channellist.presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Chanellist">
+            android:theme="@style/Theme.Channellist">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
