@@ -9,8 +9,6 @@ import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.OptIn
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -93,7 +91,7 @@ class PlayerActivity : ComponentActivity() {
 
                         )
                     },
-                ) { innerPadding ->
+                ) { _ ->
                     Player(url = url)
                 }
             }
