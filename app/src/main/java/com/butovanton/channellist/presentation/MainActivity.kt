@@ -22,7 +22,13 @@ class MainActivity : ComponentActivity() {
                     color = colorScheme.background
                 ) {
                     TabScreen {
-                        startActivity(Intent(this, PlayerActivity::class.java))
+                        it ?: return@TabScreen
+                        startActivity(
+                            Intent(this, PlayerActivity::class.java)
+                                .apply {
+                                    putExtra(PlayerActivity.CHANNEL_URL, it)
+                                }
+                        )
                     }
                 }
             }

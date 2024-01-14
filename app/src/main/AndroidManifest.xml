@@ -19,6 +19,7 @@
         <activity
             android:name="com.butovanton.channellist.PlayerActivity"
             android:exported="false"
+            android:screenOrientation="landscape"
             android:label="playactivity"
             android:theme="@style/Theme.Chanellist" />
         <activity
