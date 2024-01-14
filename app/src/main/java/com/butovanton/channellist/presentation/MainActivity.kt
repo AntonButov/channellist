@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.butovanton.channellist.PlayerActivity
+import com.butovanton.channellist.PlayerActivity.Companion.startPlayerActivity
 import com.butovanton.channellist.presentation.components.TabScreen
 import com.butovanton.channellist.presentation.theme.ChannelListTheme
 
@@ -21,14 +22,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = colorScheme.background
                 ) {
-                    TabScreen {
-                        it ?: return@TabScreen
-                        startActivity(
-                            Intent(this, PlayerActivity::class.java)
-                                .apply {
-                                    putExtra(PlayerActivity.CHANNEL_URL, it)
-                                }
-                        )
+                    TabScreen { url, icon, text ->
+                         url?: return@TabScreen
+                       this.startPlayerActivity(url, icon ?: "", text)
                     }
                 }
             }

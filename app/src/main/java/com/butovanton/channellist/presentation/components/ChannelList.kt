@@ -14,22 +14,25 @@ import com.butovanton.channellist.presentation.theme.ChannelListTheme
 fun ChannelList(
     channels: List<ChannelUi>,
     onFavoriteClick: (String) -> Unit,
-    onClick: (String?) -> Unit
+    onClick: (String?, String?, String) -> Unit
 ) {
     LazyColumn {
         item {
             Spacer(modifier = Modifier.size(20.dp))
         }
         items(channels.size) { index ->
+            val name = channels[index].name
+            val icon = channels[index].icon
+            val url = channels[index].url
             ChannelItem(
-                name = channels[index].name,
-                icon = channels[index].icon,
+                name = name,
+                icon = icon,
                 isFavorite = channels[index].isFavorite,
                 onFavoriteClick = {
                     onFavoriteClick(channels[index].name)
                 },
                 onClick = {
-                    onClick(channels[index].url)
+                    onClick(url, icon, name)
                 }
             )
                 Spacer(modifier = Modifier.size(8.dp))
@@ -47,7 +50,7 @@ fun ChannelListPreview() {
                 ChannelUi("name", null, null, false)
             ),
             onFavoriteClick = {},
-            onClick = {}
+            onClick = { _, _, _ -> },
         )
     }
 }

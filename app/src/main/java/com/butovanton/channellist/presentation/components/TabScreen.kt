@@ -30,7 +30,7 @@ enum class TabScreen(@StringRes val nameId: Int) {
 @Composable
 fun TabScreen(
     viewModel: TabsViewModel = koinViewModel(),
-    play: (String?) -> Unit
+    play: (String?, String?, String) -> Unit
 ) {
     val searchQuery by viewModel.searchQuery.collectAsState()
     val channels by viewModel.channels.collectAsState(emptyList())
@@ -59,7 +59,7 @@ private fun TabScreen(
     onTabSelect: (TabScreen) -> Unit,
     channels: List<ChannelUi>,
     onFavoriteClick: (String) -> Unit,
-    onClick: (String?) -> Unit,
+    onClick: (String?, String?, String) -> Unit,
 ) {
     Column {
         Search(
@@ -113,7 +113,7 @@ private fun TabScreenPreview() {
                 ChannelUi("name", null, null, false)
             ),
             onFavoriteClick = {},
-            onClick = {},
+            onClick = { _, _, _ -> },
         )
     }
 }

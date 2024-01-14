@@ -1,5 +1,7 @@
 package com.butovanton.channellist
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -38,11 +40,17 @@ import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import com.butovanton.channellist.presentation.theme.ChannelListTheme
 
+private const val CHANNEL_URL = "chanel_url"
+private const val CHANEL_ICON = "chanel_icon"
+private const val CHANEL_NAME = "chanel_name"
+
 class PlayerActivity : ComponentActivity() {
     @kotlin.OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val url = intent.getStringExtra(CHANNEL_URL) ?: throw Exception("No url")
+        val icon = intent.getStringExtra(CHANEL_ICON) ?: ""
+        val text = intent.getStringExtra(CHANEL_NAME) ?: ""
         setContent {
             ChannelListTheme {
                 Scaffold(
@@ -74,13 +82,24 @@ class PlayerActivity : ComponentActivity() {
     }
 
     companion object {
-        const val CHANNEL_URL = "CHANNEL_URL"
+        fun Context.startPlayerActivity(url: String, icon: String, text: String) {
+            startActivity(
+                Intent(this, PlayerActivity::class.java)
+                    .apply {
+                        putExtra(CHANNEL_URL, url)
+                        putExtra(CHANEL_ICON, icon)
+                        putExtra(CHANEL_NAME, text)
+                    }
+            )
+        }
     }
 }
 
-@OptIn(UnstableApi::class) @Composable
+@OptIn(UnstableApi::class)
+@Composable
 fun Player(modifier: Modifier = Modifier, url: String) {
-    val hardCodedUrl = Uri.parse("https://albportal.net/albkanalemusic.m3u8") // todo remove when fix backend
+    val hardCodedUrl =
+        Uri.parse("https://albportal.net/albkanalemusic.m3u8") // todo remove when fix backend
     val context = LocalContext.current
     val lifecycleOwner = rememberUpdatedState(LocalLifecycleOwner.current)
 
@@ -111,9 +130,11 @@ fun Player(modifier: Modifier = Modifier, url: String) {
                 Lifecycle.Event.ON_RESUME -> {
                     player.play()
                 }
+
                 Lifecycle.Event.ON_PAUSE -> {
                     player.stop()
                 }
+
                 else -> {}
             }
         }
