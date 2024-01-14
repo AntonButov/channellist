@@ -3,7 +3,7 @@
 - flow
 - MVVM pattern
 - unit tests
-- robolectric
+- Robolectric
   
 
   run tests: ./gradlew test
