@@ -30,6 +30,7 @@ enum class TabScreen(@StringRes val nameId: Int) {
 @Composable
 fun TabScreen(
     viewModel: TabsViewModel = koinViewModel(),
+    play: (String?) -> Unit
 ) {
     val searchQuery by viewModel.searchQuery.collectAsState()
     val channels by viewModel.channels.collectAsState(emptyList())
@@ -44,7 +45,7 @@ fun TabScreen(
         onTabSelect = viewModel::onTabSelect,
         channels = channels,
         onFavoriteClick = viewModel::onFavoriteClick,
-        onClick = { TODO() }
+        onClick = play
     )
 }
 

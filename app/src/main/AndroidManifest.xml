@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="com.butovanton.channellist.App"
@@ -13,8 +13,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Chanellist"
         tools:targetApi="31">
+        <activity
+            android:name="com.butovanton.channellist.PlayerActivity"
+            android:exported="false"
+            android:label="playactivity"
+            android:theme="@style/Theme.Chanellist" />
         <activity
             android:name="com.butovanton.channellist.presentation.MainActivity"
             android:exported="true"
